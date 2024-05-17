@@ -1,0 +1,6 @@
+framework module Pods_PokedexTask {
+  umbrella header "Pods-PokedexTask-umbrella.h"
+
+  export *
+  module * { export * }
+}
