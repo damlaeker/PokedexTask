@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var viewModel = ContentViewViewModel()
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text(self.viewModel.pokemon?.name ?? "")
         }
         .padding()
+        .onAppear{
+            Task{
+                await self.viewModel.fetchPokemon(id:1)
+                print("Pokemons  \(self.viewModel.pokemon)")
+            }
+        }
     }
 }
 

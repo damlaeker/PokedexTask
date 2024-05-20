@@ -13,15 +13,15 @@ private let API_BASE_URL = "https://pokeapi.co/api/v2/"
 actor NetworkManager: GlobalActor {
     static let shared = NetworkManager()
     private init() {}
-
+    
     private let maxWaitTime = 15.0
     var commonHeaders: HTTPHeaders = [
         "user_id": "123",
         "token": "xxx-xx"
     ]
-
+    
     func get(path: String, parameters: Parameters?) async throws -> Data {
-       // You must resume the continuation exactly once
+        // You must resume the continuation exactly once
         return try await withCheckedThrowingContinuation { continuation in
             AF.request(
                 API_BASE_URL + path,
@@ -39,7 +39,7 @@ actor NetworkManager: GlobalActor {
             }
         }
     }
-
+    
     private func handleError(error: AFError) -> Error {
         if let underlyingError = error.underlyingError {
             let nserror = underlyingError as NSError
