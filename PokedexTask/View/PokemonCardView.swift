@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PokemonCardView: View {
-    @StateObject var viewModel = ContentViewViewModel()
+    @StateObject var viewModel = PokemonStatsViewModel()
     let id:Int
     var body: some View {
         var pokemon=self.viewModel.pokemon
@@ -17,7 +17,7 @@ struct PokemonCardView: View {
                 
                 Rectangle()
                     .fill(Color.gray)
-                    .frame(width: 300,height: 400,alignment: .top)
+                    .frame(width: 200,height: 300,alignment: .top)
                     .clipShape(.rect(cornerRadius: 25))
                 
                 AsyncImage(url: URL(string: pokemon?.sprite.url ?? "")) { image in
@@ -30,17 +30,10 @@ struct PokemonCardView: View {
                 .overlay(alignment: .top){
                     Text(pokemon?.name ?? "")
                 }
-                
-                
-                
                 .padding()
             }
-            
-            
             .overlay(alignment: .bottom){
                 Text("Height: \(pokemon?.height ?? 0), Weight: \(pokemon?.weight ?? 0)")
-                
-                
                     .padding()
             }
             
@@ -49,6 +42,7 @@ struct PokemonCardView: View {
                     Rectangle()
                         .fill(Color.gray)
                         .clipShape(.rect(cornerRadius: 25))
+                    PokemonStatsView(viewModel: self.viewModel,stats: pokemon?.stats)
                     
                 }
             }
@@ -57,6 +51,7 @@ struct PokemonCardView: View {
         .onAppear{
             Task{
                 await self.viewModel.fetchPokemon(id:self.id)
+                print(self.viewModel.pokemon?.stats)
             }
         }
         

@@ -13,12 +13,13 @@ struct ContentView: View {
     @StateObject var viewModel = ContentViewViewModel()
     private let adaptiveColoumns = [GridItem(.adaptive(minimum: 160))]
     var body: some View {
+        
         NavigationView{
             ScrollView{
                 LazyVGrid(columns: adaptiveColoumns, spacing: 20){
                     ForEach(0..<20){
                         i in
-                        NavigationLink(destination:PokemonCardView(viewModel: self.viewModel, id: i+1)){
+                        NavigationLink(destination:PokemonCardView(viewModel:PokemonStatsViewModel(), id: i+1)){
                             ZStack{
                                 Rectangle()
                                     .frame(width: 180,height: 180)
@@ -27,7 +28,7 @@ struct ContentView: View {
                                 AsyncImage(url: URL(string:self.viewModel.pokemonSprites?[i] ?? "")) { image in
                                     image.resizable()
                                 } placeholder: {
-                                    Color.white
+                                    Color.clear
                                 }
                                 .foregroundColor(Color.gray)
                                 .frame(width: 100, height: 100)
