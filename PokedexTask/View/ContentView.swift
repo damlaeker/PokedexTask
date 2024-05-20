@@ -12,8 +12,11 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var viewModel = ContentViewViewModel()
     private let adaptiveColoumns = [GridItem(.adaptive(minimum: 160))]
+    @State var text = ""
     var body: some View {
-        
+        VStack{
+            SearchBar(text: $text)
+        }
         NavigationView{
             ScrollView{
                 LazyVGrid(columns: adaptiveColoumns, spacing: 20){
@@ -40,26 +43,12 @@ struct ContentView: View {
                                         
                                         Text(self.viewModel.pokemons?[i].name.capitalized ?? "")
                                             .font(.system(size: 20, weight:.medium,design: .default))
-                                        /*HStack{
-                                            ZStack{
-                                                Rectangle()
-                                                    .frame(width:80,height: 22)
-                                                    .foregroundColor(Color.blue)
-                                                    .cornerRadius(60)
-                                                Text("type")
-                                            }
-                                            ZStack{
-                                                Rectangle()
-                                                    .frame(width:80,height: 22)
-                                                    .foregroundColor(Color.blue)
-                                                    .cornerRadius(60)
-                                                Text("type")
-                                            }
-                                            
-                                        }*/
                                     }
-                                    
                                 }
+                            }
+                            .overlay(alignment: .topTrailing){
+                                Text("#\(i+1)")
+                                    .padding(6)
                             }
                         }
                     }
@@ -76,6 +65,7 @@ struct ContentView: View {
                 
             }
         }
+        
     }
 }
 

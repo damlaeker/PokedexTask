@@ -42,35 +42,5 @@ class PokemonStatsViewModel: ObservableObject {
         }
     }
     
-    func test<T>(value1: T, value2: T) where T: BinaryFloatingPoint{
-        
-        let someWork = value1 + value2
-        
-        let intValue: Int = Int(someWork)               // <<: Here: I add BinaryInteger because of Int
-        let doubleValue: Double = Double(someWork)      // <<: Here: I add BinaryFloatingPoint because of Double
-        let cgflotValue: CGFloat = CGFloat(someWork)    // <<: Here: I add BinaryFloatingPoint because of CGFloat
-        
-        print(intValue, doubleValue, cgflotValue)
-        
-    }
-    
-    func test<T>(value1: T, value2: T) where T: BinaryInteger{
-        
-        let someWork = value1 + value2
-        
-        let intValue: Int = Int(someWork)               // <<: Here: I add BinaryInteger because of Int
-        let doubleValue: Double = Double(someWork)      // <<: Here: I add BinaryFloatingPoint because of Double
-        let cgflotValue: CGFloat = CGFloat(someWork)    // <<: Here: I add BinaryFloatingPoint because of CGFloat
-        
-        print(intValue, doubleValue, cgflotValue)
-        
-    }
-    
-    func test<T: BinaryInteger>(value: ClosedRange<T>) {
-
-        let someWork: CGFloat = CGFloat(value.upperBound - value.lowerBound)
-
-        print(someWork)
-
-    }
+   
 }

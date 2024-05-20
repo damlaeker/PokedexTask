@@ -19,11 +19,8 @@ struct PokemonStatsView: View {
      //let lightTeal = Color(red: 6/256, green: 243/256, blue: 232/256)
      
      var body: some View {
-         ZStack {
-             //LinearGradient(gradient: Gradient(colors: [darkPurple, lightPurple]), startPoint: .bottom, endPoint: .top).edgesIgnoringSafeArea(.all)
-            
+        
              VStack{
-                
                  ForEach(0..<((stats?.count ?? 0)), id: \.self){
                      i in
                      let stat = stats?[i]
@@ -31,17 +28,24 @@ struct PokemonStatsView: View {
                      
                      HStack{
                          //Text("\(stats?[i].stat.name ?? "")")
-                         ProgressView("", value: statValue, total: 100)
-                             .accentColor(self.viewModel.getStatColor(stat: K.pokemonStat(rawValue: (stat?.stat.name) ?? "") ?? .hp))
-                             .scaleEffect(x: 1, y: 4, anchor: .center)
-                             .padding(6)
+                         
+                             ProgressView("", value: statValue, total: 100)
+                                 .accentColor(self.viewModel.getStatColor(stat: K.pokemonStat(rawValue: (stat?.stat.name) ?? "") ?? .hp))
+                                 .scaleEffect(x: 1, y: 4, anchor: .center)
+                                 .padding(6)
+                                 .overlay(){
+                                     Text("\(statValue)/100")
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                 }
+                             
+                         
                      }
                  }
              }
          }
         
      }
- }
+ 
 
 
 #Preview {
