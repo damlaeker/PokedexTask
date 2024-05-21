@@ -12,7 +12,7 @@ class NetworkAPI{
     static func getAllPokemons() async -> [APIItem]? {
         do {
             let data = try await NetworkManager.shared.get(
-                path: "/pokemon", parameters: nil
+                path: "/pokemon/?limit=1025", parameters: nil
             )
             let result: APIResponse = try NetworkAPI.parseData(data: data)
             return result.results
@@ -42,7 +42,7 @@ class NetworkAPI{
                    path: "/pokemon", parameters: nil
                )
                var sprites=[String]()
-               //let result: APIResponse = try APIFetchHandler.parseData(data: data)
+               
                let result=await NetworkAPI.getAllPokemons()
                for number in 1...(result?.count ?? 1){
                    let poke = await NetworkAPI.getPokemon(id: number)

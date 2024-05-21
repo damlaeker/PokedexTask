@@ -35,7 +35,8 @@ struct ContentView: View {
                                         .frame(width: 180,height: 180)
                                         .foregroundColor(Color.gray)
                                         .cornerRadius(10)
-                                    AsyncImage(url: URL(string:self.viewModel.pokemonSprites?[index] ?? "")) { image in
+                                    //AsyncImage(url: URL(string:self.viewModel.pokemonSprites?[index] ?? "")) { image in
+                                    AsyncImage(url: URL(string:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(index+1).png")) { image in
                                         image.resizable()
                                     } placeholder: {
                                         Color.clear
