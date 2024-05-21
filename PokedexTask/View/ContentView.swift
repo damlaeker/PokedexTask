@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = ContentViewViewModel()
     private let adaptiveColoumns = [GridItem(.adaptive(minimum: 160))]
     @State var text = ""
+    @State var count=0
     var body: some View {
         VStack{
             SearchBar(text: $text)
@@ -20,15 +20,18 @@ struct ContentView: View {
         NavigationView{
             ScrollView{
                 LazyVGrid(columns: adaptiveColoumns, spacing: 20){
-                    ForEach(0..<20){
-                        i in
-                        NavigationLink(destination:PokemonCardView(viewModel:PokemonStatsViewModel(), id: i+1)){
+                    //ForEach((self.viewModel.pokemons?.filter({"\($0)".contains(text.lowercased()) || text.isEmpty}) ?? [APIItem(name: "", url: "")]),id: \.name){
+                     //   it in
+                    ForEach(Array((self.viewModel.pokemons?.enumerated().filter({"\($0)".contains(text.lowercased()) || text.isEmpty}) ?? [])),id: \.element.name){
+                        (index, it) in
+                        
+                        NavigationLink(destination:PokemonCardView(viewModel:PokemonStatsViewModel(), id: index+1)){
                             ZStack{
                                 Rectangle()
                                     .frame(width: 180,height: 180)
                                     .foregroundColor(Color.gray)
                                 .cornerRadius(10)
-                                AsyncImage(url: URL(string:self.viewModel.pokemonSprites?[i] ?? "")) { image in
+                                AsyncImage(url: URL(string:self.viewModel.pokemonSprites?[index] ?? "")) { image in
                                     image.resizable()
                                 } placeholder: {
                                     Color.clear
@@ -41,17 +44,20 @@ struct ContentView: View {
                                 .overlay(alignment: .bottom){
                                     VStack{
                                         
-                                        Text(self.viewModel.pokemons?[i].name.capitalized ?? "")
+                                        Text(it.name.capitalized)
                                             .font(.system(size: 20, weight:.medium,design: .default))
                                     }
                                 }
                             }
                             .overlay(alignment: .topTrailing){
-                                Text("#\(i+1)")
+                                Text("#\(index+1)")
                                     .padding(6)
                             }
+                           
                         }
+                        
                     }
+                    
                 }
             }
         }
@@ -61,13 +67,15 @@ struct ContentView: View {
             Task{
                 await self.viewModel.fetchAllPokemons()
                 await self.viewModel.fetchPokesSprites()
-                
-                
             }
         }
         
     }
+    
+   
 }
+
+
 
 #Preview {
     ContentView()
