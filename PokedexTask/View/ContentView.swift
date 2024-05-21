@@ -14,69 +14,64 @@ struct ContentView: View {
     @State var text = ""
     @State var count=0
     var body: some View {
-        VStack{
-            SearchBar(text: $text)
-        }
-        NavigationView{
-            ScrollView{
-                LazyVGrid(columns: adaptiveColoumns, spacing: 20){
-                    //ForEach((self.viewModel.pokemons?.filter({"\($0)".contains(text.lowercased()) || text.isEmpty}) ?? [APIItem(name: "", url: "")]),id: \.name){
-                     //   it in
-                    ForEach(Array((self.viewModel.pokemons?.enumerated().filter({"\($0)".contains(text.lowercased()) || text.isEmpty}) ?? [])),id: \.element.name){
-                        (index, it) in
-                        
-                        NavigationLink(destination:PokemonCardView(viewModel:PokemonStatsViewModel(), id: index+1)){
-                            ZStack{
-                                Rectangle()
-                                    .frame(width: 180,height: 180)
+            NavigationView{
+                VStack{
+                    SearchBar(text: $text)
+                ScrollView{
+                    LazyVGrid(columns: adaptiveColoumns, spacing: 20){
+                        //ForEach((self.viewModel.pokemons?.filter({"\($0)".contains(text.lowercased()) || text.isEmpty}) ?? [APIItem(name: "", url: "")]),id: \.name){
+                        //   it in
+                        ForEach(Array((self.viewModel.pokemons?.enumerated().filter({"\($0)".contains(text.lowercased()) || text.isEmpty}) ?? [])),id: \.element.name){
+                            (index, it) in
+                            
+                            NavigationLink(destination:PokemonCardView(viewModel:PokemonStatsViewModel(), id: index+1)){
+                                ZStack{
+                                    Rectangle()
+                                        .frame(width: 180,height: 180)
+                                        .foregroundColor(Color.gray)
+                                        .cornerRadius(10)
+                                    AsyncImage(url: URL(string:self.viewModel.pokemonSprites?[index] ?? "")) { image in
+                                        image.resizable()
+                                    } placeholder: {
+                                        Color.clear
+                                    }
                                     .foregroundColor(Color.gray)
-                                .cornerRadius(10)
-                                AsyncImage(url: URL(string:self.viewModel.pokemonSprites?[index] ?? "")) { image in
-                                    image.resizable()
-                                } placeholder: {
-                                    Color.clear
-                                }
-                                .foregroundColor(Color.gray)
-                                .frame(width: 100, height: 100)
-                                .clipShape(.rect(cornerRadius: 25))
-                                .padding(30)
-                                .font(.headline)
-                                .overlay(alignment: .bottom){
-                                    VStack{
-                                        
-                                        Text(it.name.capitalized)
-                                            .font(.system(size: 20, weight:.medium,design: .default))
+                                    .frame(width: 100, height: 100)
+                                    .clipShape(.rect(cornerRadius: 25))
+                                    .padding(30)
+                                    .font(.headline)
+                                    .overlay(alignment: .bottom){
+                                        VStack{
+                                            
+                                            Text(it.name.capitalized)
+                                                .font(.system(size: 20, weight:.medium,design: .default))
+                                        }
                                     }
                                 }
+                                .overlay(alignment: .topTrailing){
+                                    Text("#\(index+1)")
+                                        .padding(6)
+                                }
+                                
                             }
-                            .overlay(alignment: .topTrailing){
-                                Text("#\(index+1)")
-                                    .padding(6)
-                            }
-                           
+                            
                         }
                         
                     }
-                    
                 }
             }
-        }
-        .navigationTitle("PokeDex")
-        .padding()
-        .onAppear{
-            Task{
-                await self.viewModel.fetchAllPokemons()
-                await self.viewModel.fetchPokesSprites()
+            .navigationTitle("PokeDex")
+            .padding()
+            .onAppear{
+                Task{
+                    await self.viewModel.fetchAllPokemons()
+                    await self.viewModel.fetchPokesSprites()
+                }
             }
+            
         }
-        
     }
-    
-   
 }
-
-
-
 #Preview {
     ContentView()
 }
