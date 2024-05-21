@@ -13,10 +13,14 @@ struct ContentView: View {
     private let adaptiveColoumns = [GridItem(.adaptive(minimum: 160))]
     @State var text = ""
     @State var count=0
+    init() {
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
+        
+    }
     var body: some View {
-            NavigationView{
-                VStack{
-                    SearchBar(text: $text)
+        NavigationView{
+            VStack{
+                SearchBar(text: $text)
                 ScrollView{
                     LazyVGrid(columns: adaptiveColoumns, spacing: 20){
                         //ForEach((self.viewModel.pokemons?.filter({"\($0)".contains(text.lowercased()) || text.isEmpty}) ?? [APIItem(name: "", url: "")]),id: \.name){
@@ -26,6 +30,7 @@ struct ContentView: View {
                             
                             NavigationLink(destination:PokemonCardView(viewModel:PokemonStatsViewModel(), id: index+1)){
                                 ZStack{
+                                    
                                     Rectangle()
                                         .frame(width: 180,height: 180)
                                         .foregroundColor(Color.gray)
@@ -45,11 +50,13 @@ struct ContentView: View {
                                             
                                             Text(it.name.capitalized)
                                                 .font(.system(size: 20, weight:.medium,design: .default))
+                                                .foregroundStyle(.white)
                                         }
                                     }
                                 }
                                 .overlay(alignment: .topTrailing){
                                     Text("#\(index+1)")
+                                        .foregroundStyle(.white)
                                         .padding(6)
                                 }
                                 
@@ -60,7 +67,9 @@ struct ContentView: View {
                     }
                 }
             }
+            
             .navigationTitle("PokeDex")
+            .navigationBarTitleDisplayMode(.inline)
             .padding()
             .onAppear{
                 Task{
@@ -68,10 +77,17 @@ struct ContentView: View {
                     await self.viewModel.fetchPokesSprites()
                 }
             }
-            
+            .background {
+                Color("AppBackgroundColor")
+                    .ignoresSafeArea()
+            }
         }
     }
+    
 }
+
+
+
 #Preview {
     ContentView()
 }
