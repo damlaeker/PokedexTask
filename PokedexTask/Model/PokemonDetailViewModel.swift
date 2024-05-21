@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-class PokemonStatsViewModel: ObservableObject {
+class PokemonDetailViewModel: ObservableObject {
     @MainActor @Published var errorMessage = ""
     @MainActor @Published var pokemon: PokemonDetails?
     func getStatColor(stat: K.pokemonStat)->Color{
@@ -24,6 +24,48 @@ class PokemonStatsViewModel: ObservableObject {
             return .purple
         case .speed:
             return .cyan
+        }
+    }
+    func getTypeColor(type: K.pokemonType)->Color{
+       
+        switch type{
+            
+        case .normal:
+            return .green
+        case .fire:
+            return .blue
+        case .water:
+            return .secondary
+        case .grass:
+            return .primary
+        case .electric:
+            return .accentColor
+        case .ice:
+            return .teal
+        case .fighting:
+            return .yellow
+        case .poison:
+            return .purple
+        case .ground:
+            return .mint
+        case .flying:
+            return .indigo
+        case .psychic:
+            return .cyan
+        case .bug:
+            return .red
+        case .rock:
+            return .brown
+        case .ghost:
+            return .white
+        case .dragon:
+            return .orange
+        case .dark:
+            return .black
+        case .steel:
+            return .gray
+        case .fairy:
+            return .pink
         }
     }
     

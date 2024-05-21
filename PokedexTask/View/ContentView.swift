@@ -28,7 +28,7 @@ struct ContentView: View {
                         ForEach(Array((self.viewModel.pokemons?.enumerated().filter({"\($0)".contains(text.lowercased()) || text.isEmpty}) ?? [])),id: \.element.name){
                             (index, it) in
                             
-                            NavigationLink(destination:PokemonCardView(viewModel:PokemonStatsViewModel(), id: index+1)){
+                            NavigationLink(destination:PokemonCardView(viewModel:PokemonDetailViewModel(), id: index+1)){
                                 ZStack{
                                     
                                     Rectangle()

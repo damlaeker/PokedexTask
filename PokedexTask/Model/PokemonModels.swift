@@ -15,7 +15,7 @@ struct PokemonDetails: Decodable {
     let sprite: Sprite
     let abilities: [Ability]
     let moves: [Move]
-    let types: [Type]
+    let types: [`Type`]
     let stats: [Stat]
     
     private enum CodingKeys: String, CodingKey {
@@ -61,7 +61,7 @@ struct Move: Decodable {
 }
 
 // MARK: -
-struct Type: Decodable {
+struct `Type`: Decodable {
     let type: APIItem
 }
 
