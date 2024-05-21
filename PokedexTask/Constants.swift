@@ -11,9 +11,9 @@ struct K{
     enum pokemonStat:String {
         case hp = "hp"
         case attack = "attack"
-        case defence = "defense"
+        case defense = "defense"
         case specialAttack = "special-attack"
-        case specialDefence = "special-defense"
+        case specialDefense = "special-defense"
         case speed = "speed"
         
     }

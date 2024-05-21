@@ -13,14 +13,14 @@ class PokemonDetailViewModel: ObservableObject {
         switch stat{
             
         case .hp:
-            return .green
+            return Color(hex: 0x1e5631)
         case .attack:
-            return .red
-        case .defence:
-            return .orange
+            return Color(hex: 0xc60000)
+        case .defense:
+             return Color(hex: 0xfd5901)
         case .specialAttack:
-            return .blue
-        case .specialDefence:
+            return Color(hex: 0x023e8a)
+        case .specialDefense:
             return .purple
         case .speed:
             return .cyan
@@ -31,41 +31,41 @@ class PokemonDetailViewModel: ObservableObject {
         switch type{
             
         case .normal:
-            return .green
+            return Color(hex: 0xa4acaf)
         case .fire:
-            return .blue
+            return Color(hex: 0xFD7D26)
         case .water:
-            return .secondary
+            return Color(hex: 0x4592c4)
         case .grass:
-            return .primary
+            return Color(hex: 0x9bcc50)
         case .electric:
-            return .accentColor
+            return Color(hex: 0xeed535)
         case .ice:
-            return .teal
+            return Color(hex: 0x51c4e7)
         case .fighting:
-            return .yellow
+            return Color(hex: 0x9eb7b8)
         case .poison:
-            return .purple
+            return Color(hex: 0xb97fc9)
         case .ground:
-            return .mint
+            return Color(hex: 0x0d98ba)
         case .flying:
-            return .indigo
+            return Color(hex: 0x0d98ba)
         case .psychic:
-            return .cyan
+            return Color(hex: 0xf366b9)
         case .bug:
-            return .red
+            return Color(hex: 0x729f3f)
         case .rock:
-            return .brown
+            return Color(hex: 0xa38c21)
         case .ghost:
-            return .white
+            return Color(hex: 0x7b62a3)
         case .dragon:
-            return .orange
+            return Color(hex: 0x0d98ba)
         case .dark:
-            return .black
+            return Color(hex: 0x707070)
         case .steel:
-            return .gray
+            return Color(hex: 0x9eb7b8)
         case .fairy:
-            return .pink
+            return Color(hex: 0xfdb9e9)
         }
     }
     
@@ -85,4 +85,15 @@ class PokemonDetailViewModel: ObservableObject {
     }
     
    
+}
+extension Color {
+    init(hex: Int, opacity: Double = 1) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xff) / 255,
+            green: Double((hex >> 08) & 0xff) / 255,
+            blue: Double((hex >> 00) & 0xff) / 255,
+            opacity: opacity
+        )
+    }
 }
